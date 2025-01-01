@@ -1,5 +1,6 @@
 <h1 style="color: green;"> Info </h1>
 **@moctar 5la9 anak 4i partie**
+<h1 style="color: blue;">Welcome to My Project!</h1>
 
 this is a math parser that support functions like {sin, cos, tan, pow, gcd, etc ...}
 and any combination of the operations and float/int and '()' and functions will
