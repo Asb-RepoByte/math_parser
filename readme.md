@@ -25,32 +25,32 @@ E is an expression, T is a term F is a factor, Function is a function
     `python recursive_descent.py "(7 - -4) + sqrt(4) - pow(gcd(25, 5), 4)"`
 - output:
 ```
-    (
-    7
-    -
-    -
-    4
-    )
-    +
-    sqrt
-    (
-    4
-    )
-    -
-    pow
-    (
-    gcd
-    (
-    25
-    ,
-    5
-    )
-    ,
-    4
-    )
+(
+7
+-
+-
+4
+)
++
+sqrt
+(
+4
+)
+-
+pow
+(
+gcd
+(
+25
+,
+5
+)
+,
+4
+)
 ########### eval #############
-    show: (((7 - (-4)) + sqrt[4]) - pow[gcd[25, 5], 4])
-    eval: -3112.0
+show: (((7 - (-4)) + sqrt[4]) - pow[gcd[25, 5], 4])
+eval: -3112.0
 ```
 - if no math expression is given the "1 + 2" will be evaluated
 
@@ -62,10 +62,10 @@ E is an expression, T is a term F is a factor, Function is a function
     `python test.py 100`
 - output:
 ```
-    27/38 are valid expression
-    11/38 are wrong check the log.txt file for more detaills
-    62/100 are skiped over
-    my calculator is 71.05263157894737% reliable for this data set
+27/38 are valid expression
+11/38 are wrong check the log.txt file for more detaills
+62/100 are skiped over
+my calculator is 71.05263157894737% reliable for this data set
 ```
 
 # Requirement
