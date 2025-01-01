@@ -5,10 +5,10 @@ and any combination of the operations and float/int and '()' and functions will
 get evaluated correctly if it followed the Grammar
 ## 4a la5ruju
 Grammars:
-    E ::= T + E | T - E | T
-    T ::= F * T | F / T | F
-    F ::= Identifier | Function | Interger | (E) | -F
-    Function ::= cos(E), sin(E), tan(E), abs(E), pow(E, E), gcd(E:int, E:int), norme(Ei)
+    E ::= T + E | T - E | T.
+    T ::= F * T | F / T | F.
+    F ::= Identifier | Function | Interger | (E) | -F.
+    Function ::= cos(E), sin(E), tan(E), abs(E), pow(E, E), gcd(E:int, E:int), norme(Ei).
 E is an expression, T is a term F is a factor, Function is a function
 
 # usage
