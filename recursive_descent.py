@@ -197,6 +197,7 @@ class Norme(Function):
 
 possible_function = [Sqrt, Cos, Sin, Tan, Acos, Asin, Atan, Pow, Norme, Abs, Gcd]
 
+
 class TreeNode:
     def __init__(self, left=None, right=None):
         self.left = left
@@ -228,14 +229,9 @@ class Numeric:
     def __str__(self):
         return f"{self.value}"
 
-
 class Identifier:
     def __init__(self):
         self.name = ""
-
-class Function:
-    def __init__(self):
-        pass
 
 class Negate():
     terminal = "-"
