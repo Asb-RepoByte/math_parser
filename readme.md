@@ -1,3 +1,20 @@
+# **Installation**
+
+!!!!!!!!!!!!!!!!! THIS IS IMPORTANT !!!!!!!!!!!
+
+because the repo contain a big file "math_expressions": 252MB that is managed by *git lsf*
+you need to make sure that you have git lsf installed
+- for linux-Ubuntu
+`sudo apt install git-lfs`
+- for windows
+`GO F*** Your self`
+after you've installed git lfs then clone the repo
+`git clone https://github.com/Asb-ReopByte/math_parser.git`
+this will install the small files but not the database only a link to it, to get the DB
+`cd math_parser`
+`git lsf pull`
+Now you are ready.
+
 # Info
 **@moctar 5la9 anak 4i partie**
 
