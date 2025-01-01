@@ -1,11 +1,10 @@
-<h1 style="color: green;"> Info </h1>
+# Info
 **@moctar 5la9 anak 4i partie**
-<h1 style="color: blue;">Welcome to My Project!</h1>
 
 this is a math parser that support functions like {sin, cos, tan, pow, gcd, etc ...}
 and any combination of the operations and float/int and '()' and functions will
 get evaluated correctly if it followed the Grammar
-## 4a la5ruju
+## *4a la5ruju*
 Grammars:
 
     E ::= T + E | T - E | T
