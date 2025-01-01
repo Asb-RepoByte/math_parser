@@ -1,5 +1,6 @@
 0000.parquet
 output.csv
 log.txt
-/__pycache__/
+/__pycache__/*
 .venv
+.gitattributes
