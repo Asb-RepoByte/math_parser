@@ -1,10 +1,12 @@
 # Info
-@moctar 5la9 anak 4i partie
+**@moctar 5la9 anak 4i partie**
+
 this is a math parser that support functions like {sin, cos, tan, pow, gcd, etc ...}
 and any combination of the operations and float/int and '()' and functions will
 get evaluated correctly if it followed the Grammar
 ## 4a la5ruju
 Grammars:
+
     E ::= T + E | T - E | T
 
     T ::= F * T | F / T | F
