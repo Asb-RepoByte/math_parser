@@ -420,8 +420,6 @@ def lexer():
 
 if __name__ == "__main__":
     #Function ::= cos(E), sin(E), tan(E), abs(E), pow(E, E), gcd(E:int, E:int), norme(<E><n>)
-    possible_function = [Sqrt, Cos, Sin, Tan, Acos, Asin, Atan, Pow, Norme, Abs, Gcd]
-    print(f"test: {Gcd.terminal}")
     next_index = 0
     next_token = None
     if sys.argv[1]:
