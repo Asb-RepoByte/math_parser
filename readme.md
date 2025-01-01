@@ -1,4 +1,4 @@
-# Info
+<h1 style="color: green;"> Info </h1>
 **@moctar 5la9 anak 4i partie**
 
 this is a math parser that support functions like {sin, cos, tan, pow, gcd, etc ...}
