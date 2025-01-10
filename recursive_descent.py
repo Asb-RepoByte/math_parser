@@ -8,8 +8,8 @@ who knows in the end I myte even add support for function and varaibles
 """
 """
 Grammars:
-    E ::= T + E | T - E | T
-    T ::= F * T | F / T | F
+    E ::= T +:- {T}
+    T ::= F *:/ {F} | F
     F ::= Identifier | <Function> | Interger | (E) | -F
     Function ::= cos(E), sin(E), tan(E), abs(E), pow(E, E), gcd(E:int, E:int), norme(<E><n>)
 """
@@ -21,6 +21,7 @@ for i in range(1, 2 * MAX_TERMS + 2):
     factorial_cached.append(factorial_cached[-1] * i)
 
 PI = 3.14159265358979323846 
+EXP = 2.718281828459045
 
 
 class Function:
@@ -49,7 +50,9 @@ class Sqrt(Function):
     max_par = 1
 
     def eval(self):
+        """
         n = self.paramters[0].eval()
+        if math.isinf(n): return n
         tolerence = 1e-10
         if n < 0:
             print(f"{self.paramters[0].show()} evaluated to a negative number")
@@ -64,6 +67,8 @@ class Sqrt(Function):
             if abs(x - y) <= tolerence:
                 return y
             x = y 
+        """
+        return math.sqrt(self.paramters[0].eval())
 
 class Abs(Function):
     terminal = "abs"
@@ -92,6 +97,7 @@ class Cos(Function):
     max_par = 1
 
     def eval(self):
+        """
         x = self.paramters[0].eval()
         x = x % (2 * PI)
         cose = 0
@@ -100,6 +106,8 @@ class Cos(Function):
             term = (x ** (2 * i)) / factorial_cached[2 * i]
             cose += sign * term
         return cose
+        """
+        return math.cos(self.paramters[0].eval())
 
 class Sin(Function):
     terminal = "sin"
@@ -107,6 +115,7 @@ class Sin(Function):
     max_par = 1
 
     def eval(self):
+        """
         x = self.paramters[0].eval()
         if abs(x) < 1e-5: return x
         x = x % (2 * PI)
@@ -117,6 +126,9 @@ class Sin(Function):
             sine += sign * term
         return sine
 
+        """
+        return math.sin(self.paramters[0].eval())
+
 
 class Tan(Function):
     terminal = "tan"
@@ -124,6 +136,7 @@ class Tan(Function):
     max_par = 1
 
     def eval(self):
+        """
         cos = Cos()
         cos.paramters  = self.paramters.copy()
         sin = Sin()
@@ -134,6 +147,8 @@ class Tan(Function):
             print(f"tan of n * pi / 2 cause division by zero you stupid ass")
             raise ValueError
         return sin / cos
+        """
+        return math.tan(self.paramters[0].eval())
 
 class Acos(Function):
     terminal = "acos"
@@ -195,7 +210,39 @@ class Norme(Function):
             result += val.eval() ** 2
         return math.sqrt(result)
 
-possible_function = [Sqrt, Cos, Sin, Tan, Acos, Asin, Atan, Pow, Norme, Abs, Gcd]
+class Exp(Function):
+    terminal = "exp"
+    max_par = 1
+    min_par = 1
+
+    def eval(self):
+        return math.exp(self.paramters[0].eval())
+
+class Ln(Function):
+    terminal = "ln"
+    max_par = 1
+    min_par = 1
+
+    def eval(self):
+        return math.log(self.paramters[0].eval())
+
+class Log10(Function):
+    terminal = "log10"
+    max_par = 1
+    min_par = 1
+
+    def eval(self):
+        return math.log(self.paramters[0].eval(), 10)
+
+class Log2(Function):
+    terminal = "log2"
+    max_par = 1
+    min_par = 1
+
+    def eval(self):
+        return math.log(self.paramters[0].eval(), 2)
+
+possible_function = [Sqrt, Cos, Sin, Tan, Acos, Asin, Atan, Pow, Norme, Abs, Gcd, Exp, Ln, Log10, Log2]
 
 
 class TreeNode:
@@ -267,11 +314,7 @@ def scan_token():
         if ch == " ":
             next_index += 1
             continue
-        if ch in "()":
-            next_token = ch
-            next_index += 1
-            return
-        if ch in "+-*/,":
+        if ch in "()+-*/,":
             next_token = ch
             next_index += 1
             return
@@ -286,7 +329,10 @@ def scan_token():
             return
         if ch.isalpha():
             token = ""
-            while next_index < len(expression) and expression[next_index].isalpha():
+            while (
+                next_index < len(expression) and
+                (expression[next_index].isalpha() or expression[next_index].isdigit())
+            ):
                 token += expression[next_index]
                 next_index += 1
             for func_class in possible_function:
@@ -323,31 +369,38 @@ def parseE():
 def parseT():
     #print("parse T")
     a = parseF()
-    scan_token()
     if not a: return None
-    if next_token == "*":
-        scan_token()
-        b = parseT()
-        if not b: return None
-        return Mul(a, b)
-    if next_token == "/":
-        scan_token()
-        b = parseT()
-        if not b: return None
-        return Div(a, b)
-    else:
-        return a
+    while True:
+        if next_token == "*":
+            scan_token()
+            b = parseF()
+            if not b: return None
+            a = Mul(a, b)
+            if not a: return None
+            continue
+        if next_token == "/":
+            scan_token()
+            b = parseF()
+            if not b: return None
+            a = Div(a, b)
+            if not a: return None
+            continue
+        else:
+            return a
 
 def parseF():
     #print("parse F")
     if isinstance(next_token, Numeric):
         #print(f"{next_token} detected")
-        return next_token
+        a = next_token
+        scan_token()
+        return a
     if "(" == next_token:
         scan_token()
         a = parseE()
         if not a: return None
         if ")" == next_token:
+            scan_token()
             return a
         else:
             return None
@@ -376,6 +429,7 @@ def parseFunc():
             if not a: return None
             fc.paramters.append(a)
         if next_token == ")":
+            scan_token()
             return fc
         else:
             print("something with function went wrong")
@@ -418,10 +472,10 @@ if __name__ == "__main__":
     #Function ::= cos(E), sin(E), tan(E), abs(E), pow(E, E), gcd(E:int, E:int), norme(<E><n>)
     next_index = 0
     next_token = None
-    if sys.argv[1]:
+    if len(sys.argv) == 2:
         expression = sys.argv[1]
     else:
-        expression = "1 + 2"
+        expression = "7 * 4 * 1 / 4 * 2 + 1 - -10"
     lexer()
     print("########### eval #############")
     result_tree = main()

@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import sys
+import math
 
 from recursive_descent import main
 
@@ -23,30 +24,24 @@ connection.close()
 with open("log.txt", "w") as f:
     pass
 
-def append_file(row, my_result):
-    with open("log.txt", "a") as f:
+with open("skiped.txt", "w") as f:
+    pass
+
+def append_file(path, row, my_result):
+    with open(path, "a") as f:
         f.write(f"{row[0]}, {row[1]} didn't work got [{my_result}] expected [{row[2]}] \n")
 
 valid = 0
 skip = 0
 for row in rows:
-    if "ln" in row[1]:
-        skip += 1
-        continue
-    if "exp" in row[1]:
-        skip += 1
-        continue
-    if "log" in row[1]:
-        skip += 1
-        continue
     try:
         my_result = main(my_expression=row[1]).eval()
-        if abs(my_result - row[2]) < 1e-5:
+        if math.isclose(my_result,  row[2], rel_tol=1e-5, abs_tol=1e-5):
             valid += 1
         else:
-            append_file(row, my_result)
+            append_file("log.txt", row, my_result)
     except:
-        append_file(row, None)
+        append_file("log.txt", row, None)
 
 print(f"{valid}/{size - skip} are valid expression")
 print(f"{size - skip - valid}/{size - skip} are wrong check the log.txt file for more detaills")
